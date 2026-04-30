@@ -1,0 +1,81 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "User profile with role-based access control.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "name": { "type": "string" },
+        "phone": { "type": "string" },
+        "role": { "type": "string", "enum": ["customer", "driver", "vendor"] },
+        "isVerified": { "type": "boolean" },
+        "documents": { "type": "array", "items": { "type": "string" } },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "role", "createdAt"]
+    },
+    "Booking": {
+      "title": "Truck Booking",
+      "description": "A logistics booking record.",
+      "type": "object",
+      "properties": {
+        "customerId": { "type": "string" },
+        "driverId": { "type": "string" },
+        "vendorId": { "type": "string" },
+        "pickup": {
+          "type": "object",
+          "properties": {
+            "address": { "type": "string" },
+            "lat": { "type": "number" },
+            "lng": { "type": "number" }
+          },
+          "required": ["address"]
+        },
+        "drop": {
+          "type": "object",
+          "properties": {
+            "address": { "type": "string" },
+            "lat": { "type": "number" },
+            "lng": { "type": "number" }
+          },
+          "required": ["address"]
+        },
+        "truckType": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "accepted", "on-transit", "completed", "cancelled"] },
+        "fare": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["customerId", "pickup", "drop", "truckType", "status", "fare", "createdAt", "updatedAt"]
+    },
+    "Truck": {
+      "title": "Truck Details",
+      "description": "Information about a truck in the fleet.",
+      "type": "object",
+      "properties": {
+        "ownerId": { "type": "string" },
+        "type": { "type": "string" },
+        "regNumber": { "type": "string" },
+        "capacity": { "type": "string" },
+        "status": { "type": "string", "enum": ["active", "maintenance", "inactive"] }
+      },
+      "required": ["ownerId", "type", "regNumber", "capacity", "status"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles and roles."
+    },
+    "/bookings/{bookingId}": {
+      "schema": "Booking",
+      "description": "Booking transactions."
+    },
+    "/trucks/{truckId}": {
+      "schema": "Truck",
+      "description": "Truck inventory."
+    }
+  }
+}

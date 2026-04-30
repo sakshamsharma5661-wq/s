@@ -1,0 +1,12 @@
+{
+  "name": "Remix: ShipSent",
+  "description": "A modern logistics and truck booking platform with real-time tracking and multi-user dashboards.",
+  "requestFramePermissions": [
+    "geolocation"
+  ],
+  "majorCapabilities": [
+    "Real-time Tracking",
+    "Multi-user Authentication",
+    "Truck Booking System"
+  ]
+}
